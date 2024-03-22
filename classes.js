@@ -94,6 +94,7 @@ class Fighter extends Sprite {
         for (const sprite in sprites) {
             sprites[sprite].image = new Image()
             sprites[sprite].image.src = sprites[sprite].imageSrc
+            // sprites[sprite].scale = 
         }
     }
 
