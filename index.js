@@ -28,7 +28,22 @@ const player = new Fighter({
     imageSrc: './Assets/BLOutis/Idle.png',
     scale: 0.25,
     framesMax: 1,
-
+    sprites: {
+        idle: {
+            imageSrc: "./Assets/BLOutis/Idle.png",
+            framesMax: 1
+        },
+        run: {
+            imageSrc: "./Assets/BLOutis/Run.png",
+            framesMax: 1,
+            scale: 2
+        },
+        dodge: {
+            imageSrc: "./Assets/BLOutis/Dodge.png",
+            framesMax: 1,
+            scale: 2  
+        }
+    }
 })
 
 
@@ -86,10 +101,13 @@ function animate() {
     enemy.update()
 
     player.velocity.x = 0
+    player.image = player.sprites.idle.image
     if (keys.a.pressed && player.lastKey === 'a') {
         player.velocity.x = -5
+        player.image = player.sprites.dodge.image
     } else if (keys.d.pressed && player.lastKey === 'd') {
         player.velocity.x = 5
+        player.image = player.sprites.run.image
     }
 
     enemy.velocity.x = 0
