@@ -45,7 +45,10 @@ const enemy = new Fighter({
     offset: {
         x: -50,
         y: 0
-    }
+    },
+    imageSrc: './Assets/ZweiGreg/Idle.png',
+    scale: 0.25,
+    framesMax: 1,
 })
 
 const keys = {
@@ -80,7 +83,7 @@ function animate() {
     c.fillRect(0, 0, canvas.width, canvas.height)
     background.update()
     player.update()
-    //enemy.update()
+    enemy.update()
 
     player.velocity.x = 0
     if (keys.a.pressed && player.lastKey === 'a') {
