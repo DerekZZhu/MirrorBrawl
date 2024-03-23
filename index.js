@@ -33,6 +33,10 @@ const player = new Fighter({
             imageSrc: "./Assets/BLOutis/Idle.png",
             framesMax: 1
         },
+        jump: {
+            imageSrc: "./Assets/BLOutis/Idle.png",
+            framesMax: 1
+        },
         run: {
             imageSrc: "./Assets/BLOutis/Run.png",
             framesMax: 1,
@@ -42,6 +46,15 @@ const player = new Fighter({
             imageSrc: "./Assets/BLOutis/Dodge.png",
             framesMax: 1,
             scale: 2  
+        },
+        block: {
+            imageSrc: "./Assets/BLOutis/Block.png",
+            framesMax: 1,
+            scale: 2
+        },
+        attack1: {
+            imageSrc: "./Assets/BLOutis/attack1.png",
+            framesMax: 7
         }
     }
 })
@@ -79,6 +92,10 @@ const keys = {
         pressed: false
     },
 
+    s: {
+        pressed: false
+    },
+
     ArrowRight: {
         pressed: false
     },
@@ -101,18 +118,25 @@ function animate() {
     enemy.update()
 
     player.velocity.x = 0
-    player.image = player.sprites.idle.image
-    player.scale = 0.25
-
     if (keys.a.pressed && player.lastKey === 'a') {
         player.velocity.x = -5
-        player.scale = 0.5
-        player.image = player.sprites.dodge.image
+        player.switchSprite('run', 0.4)
     } else if (keys.d.pressed && player.lastKey === 'd') {
         player.velocity.x = 5
-        player.scale = 0.5
+        player.switchSprite('run', 0.4)
+    } else {
+        player.switchSprite('idle', 0.25)
+    }
+    
+    if (player.velocity.y < 0) {
+        player.switchSprite('jump', 0.25)
+    } else if (player.velocity.y > 0) {
+        player.switchSprite('idle', 0.25)
+    }
 
-        player.image = player.sprites.run.image
+    if (keys.s.pressed) {
+        player.scale = 0.4
+        player.image = player.sprites.block.image
     }
 
     enemy.velocity.x = 0
@@ -164,6 +188,10 @@ window.addEventListener('keydown', (event) => {
             player.attack()
             break
 
+        case 's':
+            keys.s.pressed = true
+            break
+
         case 'ArrowRight':
             keys.ArrowRight.pressed = true
             enemy.lastKey = 'ArrowRight'
@@ -193,6 +221,8 @@ window.addEventListener('keyup', (event) => {
         case 'w':
             keys.w.pressed = false
             break
+        case 's':
+            keys.s.pressed = false
 
         case 'ArrowRight':
             keys.ArrowRight.pressed = false
